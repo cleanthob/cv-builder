@@ -7,16 +7,24 @@ import {
   Languages,
   Share2,
 } from "lucide-react";
-import { Separator } from "react-resizable-panels";
+import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+
 import { Fragment } from "react/jsx-runtime";
 import { MultipleDragItemData, MultipleDragList } from "../multiple-drag-list";
-import { useState } from "react";
 import { ManageMultipleItemDialog } from "../multiple-drag-list/manage-multiple-dialog";
+import { Separator } from "@/components/ui/separator";
 
 export const MultiplesSections = () => {
+  const { getValues } = useFormContext();
   const [sectionToAdd, setSectionToAdd] = useState<MultipleDragItemData | null>(
     null,
   );
+
+  const [initialData, setInitialData] = useState<MultipleDragItemData | null>(
+    null,
+  );
+
   const sectionsKeys: MultipleDragItemData[] = [
     {
       formKey: "socialMedias",
@@ -68,6 +76,15 @@ export const MultiplesSections = () => {
       descriptionKey: "description",
     },
   ];
+
+  const onEdit = (section: MultipleDragItemData, index: number) => {
+    const currentValues = getValues();
+    const currentItems = currentValues.content[section.formKey];
+
+    setSectionToAdd(section);
+    setInitialData(currentItems[index]);
+  };
+
   return (
     <div>
       {sectionsKeys.map((section) => (
@@ -78,17 +95,21 @@ export const MultiplesSections = () => {
             onAdd={() => {
               setSectionToAdd(section);
             }}
-            onEdit={() => {}}
+            onEdit={(index) => onEdit(section, index)}
           />
         </Fragment>
       ))}
 
       {sectionToAdd && (
         <ManageMultipleItemDialog
+          initialData={initialData}
           data={sectionToAdd}
           open={!!sectionToAdd}
           setOpen={(value) => {
-            if (!value) setSectionToAdd(null);
+            if (!value) {
+              setSectionToAdd(null);
+              setInitialData(null);
+            }
           }}
         />
       )}
