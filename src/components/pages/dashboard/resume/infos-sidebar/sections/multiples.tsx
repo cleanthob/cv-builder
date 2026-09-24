@@ -10,8 +10,13 @@ import {
 import { Separator } from "react-resizable-panels";
 import { Fragment } from "react/jsx-runtime";
 import { MultipleDragItemData, MultipleDragList } from "../multiple-drag-list";
+import { useState } from "react";
+import { ManageMultipleItemDialog } from "../multiple-drag-list/manage-multiple-dialog";
 
 export const MultiplesSections = () => {
+  const [sectionToAdd, setSectionToAdd] = useState<MultipleDragItemData | null>(
+    null,
+  );
   const sectionsKeys: MultipleDragItemData[] = [
     {
       formKey: "socialMedias",
@@ -68,9 +73,25 @@ export const MultiplesSections = () => {
       {sectionsKeys.map((section) => (
         <Fragment key={`multiple-section-${section.title}`}>
           <Separator className="my-5" />
-          <MultipleDragList data={section} onAdd={() => {}} onEdit={() => {}} />
+          <MultipleDragList
+            data={section}
+            onAdd={() => {
+              setSectionToAdd(section);
+            }}
+            onEdit={() => {}}
+          />
         </Fragment>
       ))}
+
+      {sectionToAdd && (
+        <ManageMultipleItemDialog
+          data={sectionToAdd}
+          open={!!sectionToAdd}
+          setOpen={(value) => {
+            if (!value) setSectionToAdd(null);
+          }}
+        />
+      )}
     </div>
   );
 };
