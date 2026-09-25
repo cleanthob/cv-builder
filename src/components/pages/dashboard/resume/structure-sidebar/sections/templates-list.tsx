@@ -6,11 +6,25 @@ import { SectionTitle } from "../../infos-sidebar/section-title";
 
 const allTemplates: ResumeTemplates[] = ["ditto", "eevee", "jynx", "onix"];
 
+const templateLabels: Record<ResumeLanguages, string> = {
+  portuguese: "Modelos",
+  english: "Templates",
+  spanish: "Plantillas",
+  french: "Modèles",
+  german: "Vorlagen",
+  italian: "Modelli",
+};
+
 export const TemplatesListSection = () => {
-  const { control } = useFormContext<ResumeData>();
+  const { control, watch } = useFormContext<ResumeData>();
+  const selectedLanguage = watch("structure.language") ?? "portuguese";
+
   return (
     <div>
-      <SectionTitle title="Modelos" icon={LayoutTemplate}></SectionTitle>
+      <SectionTitle
+        title={templateLabels[selectedLanguage]}
+        icon={LayoutTemplate}
+      ></SectionTitle>
 
       <Controller
         control={control}

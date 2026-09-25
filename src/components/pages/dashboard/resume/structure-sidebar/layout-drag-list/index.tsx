@@ -1,6 +1,6 @@
 import { Draggable } from "@hello-pangea/dnd";
 import { GripVertical } from "lucide-react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 type LayoutDragListProps = {
   title: string;
@@ -75,9 +75,10 @@ const labels: Record<ResumeSections, Record<ResumeLanguages, string>> = {
 };
 
 export const LayoutDragList = ({ title, fields }: LayoutDragListProps) => {
-  const { watch } = useFormContext<ResumeData>();
+  const { control } = useFormContext<ResumeData>();
 
-  const language = watch("structure.language");
+  const language =
+    useWatch({ control, name: "structure.language" }) ?? "portuguese";
 
   return (
     <div className="w-full p-2 bg-muted rounded">
@@ -86,8 +87,8 @@ export const LayoutDragList = ({ title, fields }: LayoutDragListProps) => {
       <div className="flex flex-col gap-2">
         {fields.map((field, index) => (
           <Draggable
-            key={field.key}
-            draggableId={`draggable-${field.key}`}
+            key={`${field.key}-${language}`}
+            draggableId={`draggable-${field.key}-${language}`}
             index={index}
           >
             {(provided) => (

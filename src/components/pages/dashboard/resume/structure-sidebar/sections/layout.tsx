@@ -55,7 +55,7 @@ export const LayoutSection = () => {
     <div>
       <SectionTitle title="Estrutura" icon={Columns3} />
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="grid grid-cols-2 gap-4 mt-4">
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Droppable droppableId="mainFields">
             {(provided) => (
               <div ref={provided.innerRef} {...provided.droppableProps}>

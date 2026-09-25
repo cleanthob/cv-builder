@@ -18,11 +18,22 @@ const colorKeys = Object.keys(colors).filter(
   (key) => !keysToIgnore.includes(key),
 ) as (keyof typeof colors)[];
 
+const themeLabels: Record<ResumeLanguages, string> = {
+  portuguese: "Tema",
+  english: "Theme",
+  spanish: "Tema",
+  french: "Thème",
+  german: "Thema",
+  italian: "Tema",
+};
+
 export const ThemeSection = () => {
-  const { control } = useFormContext<ResumeData>();
+  const { control, watch } = useFormContext<ResumeData>();
+  const selectedLanguage = watch("structure.language") ?? "portuguese";
+
   return (
     <div>
-      <SectionTitle title="Tema" icon={Palette} />
+      <SectionTitle title={themeLabels[selectedLanguage]} icon={Palette} />
       <Controller
         control={control}
         name="structure.colorTheme"
