@@ -30,8 +30,15 @@ export const InputField = ({
           className={containerClassName}
           error={fieldState?.error}
         >
-          <Input {...props} {...field} />
-          {extraContent && extraContent(field.value)}
+          <Input
+            {...props}
+            {...field}
+            value={field.value ?? ""}
+            onChange={(event) => field.onChange(event.target.value)}
+            onBlur={field.onBlur}
+            ref={field.ref}
+          />
+          {extraContent && extraContent(field.value ?? "")}
         </FieldWrapper>
       )}
     />

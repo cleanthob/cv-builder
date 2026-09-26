@@ -13,7 +13,9 @@ type TooltipProps = {
 export const Tooltip = ({ children, content }: TooltipProps) => {
   return (
     <TooltipRoot>
-      <TooltipTrigger>{children}</TooltipTrigger>
+      <TooltipTrigger>
+        <span>{children}</span>
+      </TooltipTrigger>
       <TooltipContent>
         <p>{content}</p>
       </TooltipContent>

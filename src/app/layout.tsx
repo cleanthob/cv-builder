@@ -1,9 +1,9 @@
+import { ThemeProvider } from "@/components/shared/theme-provider";
 import { cn } from "cn";
 import type { Metadata } from "next";
 import { Nunito, Nunito_Sans } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/components/shared/theme-provider";
 import { Toaster } from "sonner";
+import "./globals.css";
 
 const fontSans = Nunito_Sans({
   variable: "--font-nunito-sans",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",

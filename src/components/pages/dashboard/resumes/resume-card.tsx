@@ -14,7 +14,7 @@ export const ResumeCardButton = ({
   icon,
 }: ResumeCardButtonProps) => {
   return (
-    <button
+    <div
       className={cn(
         "w-full h-75 bg-muted/50 rounded border border-muted-foreground/20",
         "flex items-center justify-center relative outline-none overflow-hidden",
@@ -28,7 +28,7 @@ export const ResumeCardButton = ({
           {description}
         </span>
       </div>
-    </button>
+    </div>
   );
 };
 

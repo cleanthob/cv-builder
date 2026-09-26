@@ -1,10 +1,10 @@
 "use client";
 
 import TextAlign from "@tiptap/extension-text-align";
-import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { cn } from "cn";
+import { useEffect } from "react";
 import { MenuBar } from "./menubar";
 
 type EditorProps = {
@@ -28,7 +28,6 @@ export const Editor = ({ value, onChange, className }: EditorProps) => {
           },
         },
       }),
-      Underline,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content: value,
@@ -47,6 +46,15 @@ export const Editor = ({ value, onChange, className }: EditorProps) => {
     // Don't render immediately on the server to avoid SSR issues
     immediatelyRender: false,
   });
+
+  useEffect(() => {
+    if (!editor) return;
+
+    const currentHtml = editor.getHTML();
+    if (value !== currentHtml) {
+      editor.commands.setContent(value || "", { emitUpdate: false });
+    }
+  }, [editor, value]);
 
   return (
     <div
