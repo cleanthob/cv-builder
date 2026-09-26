@@ -2,10 +2,12 @@ import type { AdapterAccountType } from "@auth/core/adapters";
 import {
   boolean,
   integer,
+  json,
   pgTable,
   primaryKey,
   text,
   timestamp,
+  uuid,
 } from "drizzle-orm/pg-core";
 
 // Auth
@@ -94,3 +96,14 @@ export const authenticators = pgTable(
 );
 
 // Platform
+
+export const resumes = pgTable("resumes", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  title: text("title").notNull(),
+  data: json("data").default({}).notNull(),
+  userId: text("user_id")
+    .references(() => users.id, { onDelete: "cascade" })
+    .notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
