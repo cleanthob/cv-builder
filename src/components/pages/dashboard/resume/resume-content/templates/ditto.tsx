@@ -1,10 +1,10 @@
-import { BaseResumeProps } from ".";
-import { Element } from "../resume-element";
 import { sectionIsEmpty } from "@/lib/utils";
-import { ResumeSectionContent } from "./shared/sections-content";
 import { Fragment } from "react";
+import { BaseResumeProps } from ".";
 import { sectionLabels } from "../../structure-sidebar/layout-drag-list";
+import { Element } from "../resume-element";
 import { BasicInfos } from "./shared/basic-infos";
+import { ResumeSectionContent } from "./shared/sections-content";
 
 export const Ditto = ({ data }: BaseResumeProps) => {
   const { content } = data;
@@ -38,7 +38,7 @@ export const Ditto = ({ data }: BaseResumeProps) => {
 
         return (
           <Fragment key={`section-item-${section.key}`}>
-            <div className="grid grid-cols-[140px,1fr]">
+            <div className="grid grid-cols-[140px_1fr]">
               <p className="font-bold text-sm">
                 {sectionLabels[section.key][data.structure.language]}
               </p>

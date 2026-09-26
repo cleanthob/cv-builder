@@ -7,6 +7,7 @@
 @theme inline {
   --font-sans: var(--font-nunito-sans);
   --font-title: var(--font-nunito-title);
+  --color-resume-primary: var(--resume-primary);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-sidebar-ring: var(--sidebar-ring);

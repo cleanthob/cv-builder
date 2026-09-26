@@ -1,5 +1,5 @@
-import { Element } from "../../resume-element";
 import { cn } from "@/lib/utils";
+import { Element } from "../../resume-element";
 import { Link } from "./link";
 
 type LevelIndicatorVariant = "dots" | "bars";
@@ -36,7 +36,7 @@ const LevelIndicator = ({
               key={`indicator-item-${i}`}
               className={cn(
                 "w-2 h-2 rounded-full border border-current",
-                i < level && "bg-current"
+                i < level && "bg-current",
               )}
             />
           ))}
@@ -48,7 +48,7 @@ const LevelIndicator = ({
             className="h-full bg-current"
             style={{ width: `${(level / 5) * 100}%` }}
           />
-          <div className="h-full flex-1 bg-resume-primary opacity-30" />
+          <div className="h-full flex-1 bg-current opacity-30" />
         </div>
       )}
     </div>
@@ -58,7 +58,7 @@ const LevelIndicator = ({
 export const ResumeSectionContent = ({
   section,
   content,
-  levelsColor = "text-resume-primary",
+  levelsColor,
   linkIconColor,
   levelIndicatorVariant,
 }: ResumeSectionContentProps) => {
@@ -190,7 +190,11 @@ export const ResumeSectionContent = ({
               >
                 <Element className="font-bold -mb-1.5">{language.name}</Element>
                 <Element>{language.description}</Element>
-                <LevelIndicator level={level} levelsColor={levelsColor} variant={levelIndicatorVariant} />
+                <LevelIndicator
+                  level={level}
+                  levelsColor={levelsColor}
+                  variant={levelIndicatorVariant}
+                />
               </div>
             );
           })}

@@ -3,7 +3,7 @@ import { SectionTitle } from "../../infos-sidebar/section-title";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "cn";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import colors from "tailwindcss/colors";
 
 const keysToIgnore = [
@@ -28,8 +28,10 @@ const themeLabels: Record<ResumeLanguages, string> = {
 };
 
 export const ThemeSection = () => {
-  const { control, watch } = useFormContext<ResumeData>();
-  const selectedLanguage = watch("structure.language") ?? "portuguese";
+  const { control } = useFormContext<ResumeData>();
+
+  const selectedLanguage =
+    useWatch({ control, name: "structure.language" }) ?? "portuguese";
 
   return (
     <div>
@@ -49,6 +51,10 @@ export const ThemeSection = () => {
                     "w-7 h-7 p-1 rounded-full transition-all",
                     isSelected && "ring-2 ring-foreground",
                   )}
+                  type="button"
+                  aria-label={`${colorKey} theme color`}
+                  aria-pressed={isSelected}
+                  title={colorKey}
                   onClick={() => field.onChange(colorKey)}
                 >
                   <div

@@ -1,8 +1,8 @@
 import { cn, sectionIsEmpty } from "@/lib/utils";
 import { BaseResumeProps } from ".";
+import { sectionLabels } from "../../structure-sidebar/layout-drag-list";
 import { Element } from "../resume-element";
 import { BasicInfos } from "./shared/basic-infos";
-import { sectionLabels } from "../../structure-sidebar/layout-drag-list";
 import { ResumeSectionContent } from "./shared/sections-content";
 
 export const Eevee = ({ data }: BaseResumeProps) => {
@@ -48,7 +48,7 @@ export const Eevee = ({ data }: BaseResumeProps) => {
   };
 
   return (
-    <div className="w-full h-full grid grid-cols-[1fr,250px]">
+    <div className="w-full h-full grid grid-cols-[minmax(0,1fr)_250px]">
       <section className="p-5">
         <div className="flex items-center gap-4 mb-4">
           {content.image.url && content.image.visible && (

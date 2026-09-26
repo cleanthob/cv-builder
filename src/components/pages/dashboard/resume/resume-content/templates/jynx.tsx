@@ -1,8 +1,8 @@
 import { cn, sectionIsEmpty } from "@/lib/utils";
 import { BaseResumeProps } from ".";
+import { sectionLabels } from "../../structure-sidebar/layout-drag-list";
 import { Element } from "../resume-element";
 import { BasicInfos } from "./shared/basic-infos";
-import { sectionLabels } from "../../structure-sidebar/layout-drag-list";
 import { ResumeSectionContent } from "./shared/sections-content";
 
 export const Jynx = ({ data }: BaseResumeProps) => {
@@ -21,7 +21,7 @@ export const Jynx = ({ data }: BaseResumeProps) => {
 
   return (
     <div className="w-full h-full">
-      <section className="w-full h-max min-h-[120px] bg-resume-primary text-white items-center grid grid-cols-[300px,1fr]">
+      <section className="w-full h-max min-h-[120px] bg-resume-primary text-white items-center grid grid-cols-[300px_1fr]">
         <div className="relative">
           {content.image.url && content.image.visible && (
             <img
@@ -36,7 +36,7 @@ export const Jynx = ({ data }: BaseResumeProps) => {
         </div>
       </section>
 
-      <div className="grid grid-cols-[300px,1fr]">
+      <div className="grid grid-cols-[300px_1fr]">
         <section className="p-6 pt-20">
           {sidebarSections.map((section, i) => {
             return (
@@ -74,7 +74,7 @@ export const Jynx = ({ data }: BaseResumeProps) => {
                   {sectionLabels[section.key][data.structure.language]}
                 </p>
 
-                <div className="border-l border-l-resume-primary pl-4 w-full">
+                <div className="border-l pl-4 w-full">
                   <ResumeSectionContent
                     key={section.id}
                     section={section}

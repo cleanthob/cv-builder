@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import { Link as LinkIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link as LinkIcon } from "lucide-react";
+import { ReactNode } from "react";
 
 type LinkProps = {
   href: string | undefined;
@@ -13,7 +13,7 @@ export const Link = ({
   href,
   children,
   withIcon = true,
-  iconColor = "text-resume-primary",
+  iconColor,
 }: LinkProps) => {
   const Element = href ? "a" : "p";
 
