@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import { Nunito, Nunito_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
+import { ptBR } from "date-fns/locale";
+import { setDefaultOptions } from "date-fns";
 
 const fontSans = Nunito_Sans({
   variable: "--font-nunito-sans",
@@ -20,6 +22,10 @@ const fontTitle = Nunito({
 export const metadata: Metadata = {
   title: "CvBuilder",
 };
+
+setDefaultOptions({
+  locale: ptBR,
+});
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
