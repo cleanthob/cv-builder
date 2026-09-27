@@ -5,7 +5,13 @@ import { TransformControls } from "./controls";
 import { NavigationHeader } from "./header";
 import { ResumeTemplate } from "./templates";
 
-export const ResumeContent = ({ data }: { data: ResumeData }) => {
+export const ResumeContent = ({
+  data,
+  title,
+}: {
+  data: ResumeData;
+  title: string;
+}) => {
   return (
     <section className="overflow-hidden w-full h-full flex items-center justify-center relative bg-muted dark:bg-background">
       <TransformWrapper
@@ -16,7 +22,7 @@ export const ResumeContent = ({ data }: { data: ResumeData }) => {
         limitToBounds={false}
       >
         <>
-          <NavigationHeader />
+          <NavigationHeader title={title} />
           <TransformControls />
           <TransformComponent>
             <ResumeTemplate data={data} />

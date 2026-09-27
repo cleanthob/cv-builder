@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/resizable";
 import { updateResumeData } from "@/db/actions";
 import { useDebounce } from "@/hooks/use-debounce";
+import { mergician } from "mergician";
 import { User } from "next-auth";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useRef } from "react";
@@ -14,7 +15,6 @@ import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { InfosSidebar } from "./infos-sidebar";
 import { ResumeContent } from "./resume-content";
 import { StructureSidebar } from "./structure-sidebar";
-import { mergician } from "mergician";
 
 type ResumePageProps = {
   title: string;
@@ -107,7 +107,7 @@ export const ResumePage = ({ title, initialData, user }: ResumePageProps) => {
           <ResizableHandle withHandle />
 
           <ResizablePanel minSize="30%" defaultSize="45%">
-            <ResumeContent data={data} />
+            <ResumeContent data={data} title={title} />
           </ResizablePanel>
           <ResizableHandle withHandle />
 
