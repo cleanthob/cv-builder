@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip } from "@/components/ui/tooltip";
 import { Copy, Download, Home, Trash } from "lucide-react";
 import Link from "next/link";
+import { DeleteResumeDialog } from "./delete-resume-dialog";
 
 export const NavigationHeader = ({ title }: { title: string }) => {
   return (
@@ -25,15 +26,17 @@ export const NavigationHeader = ({ title }: { title: string }) => {
       </div>
 
       <div className="flex gap-1">
-        <Tooltip content="Deletar currículo">
-          <Button
-            variant="secondary"
-            className="w-8 h-8 bg-transparent"
-            size="icon"
-          >
-            <Trash size={18} />
-          </Button>
-        </Tooltip>
+        <DeleteResumeDialog>
+          <Tooltip content="Deletar currículo">
+            <Button
+              variant="secondary"
+              className="w-8 h-8 bg-transparent"
+              size="icon"
+            >
+              <Trash size={18} />
+            </Button>
+          </Tooltip>
+        </DeleteResumeDialog>
 
         <Tooltip content="Duplicar currículo">
           <Button

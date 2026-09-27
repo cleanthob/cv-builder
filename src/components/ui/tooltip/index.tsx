@@ -10,10 +10,10 @@ type TooltipProps = {
   content: string | number | ReactNode;
 };
 
-export const Tooltip = ({ children, content }: TooltipProps) => {
+export const Tooltip = ({ children, content, ...props }: TooltipProps) => {
   return (
     <TooltipRoot>
-      <TooltipTrigger>
+      <TooltipTrigger {...props}>
         <span>{children}</span>
       </TooltipTrigger>
       <TooltipContent>
