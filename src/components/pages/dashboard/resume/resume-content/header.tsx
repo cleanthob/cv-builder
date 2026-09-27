@@ -4,8 +4,10 @@ import { Copy, Download, Home, Trash } from "lucide-react";
 import Link from "next/link";
 import { DeleteResumeDialog } from "./delete-resume-dialog";
 import { DuplicateResumeDialog } from "./duplicate-resume-dialog";
+import { useResumeDownload } from "@/hooks/use-resume-download";
 
 export const NavigationHeader = ({ title }: { title: string }) => {
+  const { handleDownloadResume } = useResumeDownload(title);
   return (
     <header className="absolute w-full left-0 top-0 z-10 p-2 bg-background border-b border-muted flex items-center justify-between gap-2">
       <div className="flex items-center gap-2">
@@ -56,6 +58,7 @@ export const NavigationHeader = ({ title }: { title: string }) => {
             variant="secondary"
             className="w-8 h-8 bg-transparent"
             size="icon"
+            onClick={handleDownloadResume}
           >
             <Download size={18} />
           </Button>

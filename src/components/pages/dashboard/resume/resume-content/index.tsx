@@ -23,7 +23,7 @@ export const ResumeContent = ({
       >
         <>
           <NavigationHeader title={title} />
-          <TransformControls />
+          <TransformControls title={title} />
           <TransformComponent>
             <ResumeTemplate data={data} />
           </TransformComponent>
