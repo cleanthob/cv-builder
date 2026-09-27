@@ -14,6 +14,7 @@ import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { InfosSidebar } from "./infos-sidebar";
 import { ResumeContent } from "./resume-content";
 import { StructureSidebar } from "./structure-sidebar";
+import { mergician } from "mergician";
 
 type ResumePageProps = {
   title: string;
@@ -25,6 +26,7 @@ export const ResumePage = ({ title, initialData, user }: ResumePageProps) => {
   const params = useParams();
 
   const resumeId = params.id as string;
+
   const defaultValues: ResumeData = {
     content: {
       summary: "<p></p>",
@@ -68,20 +70,9 @@ export const ResumePage = ({ title, initialData, user }: ResumePageProps) => {
       },
     },
   };
+
   const methods = useForm<ResumeData>({
-    defaultValues: {
-      ...defaultValues,
-      ...initialData,
-      content: { ...defaultValues.content, ...initialData.content },
-      structure: {
-        ...defaultValues.structure,
-        ...initialData.structure,
-        layout: {
-          ...defaultValues.structure.layout,
-          ...initialData.structure?.layout,
-        },
-      },
-    },
+    defaultValues: mergician(defaultValues, initialData),
   });
 
   const data = useWatch({ control: methods.control }) as ResumeData;
