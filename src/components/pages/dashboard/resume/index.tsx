@@ -5,26 +5,42 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { FormProvider, useForm } from "react-hook-form";
+import { updateResumeData } from "@/db/actions";
+import { useDebounce } from "@/hooks/use-debounce";
+import { User } from "next-auth";
+import { useParams } from "next/navigation";
+import { useCallback, useEffect, useRef } from "react";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { InfosSidebar } from "./infos-sidebar";
 import { ResumeContent } from "./resume-content";
 import { StructureSidebar } from "./structure-sidebar";
-export const ResumePage = () => {
+
+type ResumePageProps = {
+  title: string;
+  initialData: Partial<ResumeData>;
+  user?: User;
+};
+
+export const ResumePage = ({ title, initialData, user }: ResumePageProps) => {
+  const params = useParams();
+
+  const resumeId = params.id as string;
   const defaultValues: ResumeData = {
     content: {
+      summary: "<p></p>",
       image: {
-        url: "",
+        url: user?.image ?? "",
         visible: true,
       },
       infos: {
-        email: "",
-        fullName: "",
+        email: user?.email ?? "",
+        fullName: user?.name ?? "",
         headline: "",
         location: "",
         phone: "",
         website: "",
       },
-      summary: "",
+
       certifications: [],
       educations: [],
       experiences: [],
@@ -52,7 +68,43 @@ export const ResumePage = () => {
       },
     },
   };
-  const methods = useForm<ResumeData>({ defaultValues });
+  const methods = useForm<ResumeData>({
+    defaultValues: {
+      ...defaultValues,
+      ...initialData,
+      content: { ...defaultValues.content, ...initialData.content },
+      structure: {
+        ...defaultValues.structure,
+        ...initialData.structure,
+        layout: {
+          ...defaultValues.structure.layout,
+          ...initialData.structure?.layout,
+        },
+      },
+    },
+  });
+
+  const data = useWatch({ control: methods.control }) as ResumeData;
+  const debouncedData = useDebounce(JSON.stringify(data));
+
+  const shouldSave = useRef(false);
+
+  const handleSaveUpdates = useCallback(async () => {
+    if (!shouldSave.current) {
+      shouldSave.current = true;
+      return;
+    }
+
+    try {
+      await updateResumeData(resumeId, methods.getValues());
+    } catch (error) {
+      console.error("Erro ao salvar currículo:", error);
+    }
+  }, [methods, resumeId]);
+
+  useEffect(() => {
+    void handleSaveUpdates();
+  }, [debouncedData, handleSaveUpdates]);
 
   return (
     <FormProvider {...methods}>
@@ -64,7 +116,7 @@ export const ResumePage = () => {
           <ResizableHandle withHandle />
 
           <ResizablePanel minSize="30%" defaultSize="45%">
-            <ResumeContent />
+            <ResumeContent data={data} />
           </ResizablePanel>
           <ResizableHandle withHandle />
 
