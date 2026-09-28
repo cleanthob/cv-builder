@@ -1,4 +1,4 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { Control, Controller, useFormContext } from "react-hook-form";
 
 import { FieldWrapper } from "../field-wrapper";
 import { Editor } from ".";
@@ -8,6 +8,8 @@ type EditorFieldProps = {
   name: string;
   containerClassName?: string;
   required?: boolean;
+  className?: string;
+  control?: Control<any, any>;
 };
 
 export const EditorField = ({
@@ -15,12 +17,13 @@ export const EditorField = ({
   name,
   required,
   containerClassName,
+  control: customControl,
   ...props
 }: EditorFieldProps) => {
   const { control } = useFormContext();
   return (
     <Controller
-      control={control}
+      control={customControl ?? control}
       name={name}
       rules={{ required: required && "Campo obrigatório" }}
       render={({ field, fieldState }) => (
