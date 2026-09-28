@@ -3,9 +3,8 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { AIGenerationDropdown } from "./ai-generation-dropdown";
 import { BasicInfoSection } from "./sections/basic-info";
-import { SummarySection } from "./sections/summary";
-import { MultipleDragList } from "./multiple-drag-list";
 import { MultiplesSections } from "./sections/multiples";
+import { SummarySection } from "./sections/summary";
 
 export const InfosSidebar = () => {
   return (
@@ -13,8 +12,8 @@ export const InfosSidebar = () => {
       <div className="w-full flex items-center justify-between">
         <Link href="/dashboard/resumes">
           <Logo className="w-full max-w-20" />
-          <AIGenerationDropdown />
         </Link>
+        <AIGenerationDropdown />
       </div>
 
       <Separator className="my-5" />
