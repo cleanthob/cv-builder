@@ -1,17 +1,24 @@
 import { ComponentProps, ReactNode } from "react";
-import { Control, Controller, useFormContext } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldPath,
+  FieldValues,
+  useFormContext,
+} from "react-hook-form";
 import { Input } from ".";
 import { FieldWrapper } from "../field-wrapper";
 
-type InputFieldProps = ComponentProps<typeof Input> & {
-  label: string;
-  name: string;
-  containerClassName?: string;
-  extraContent?: (value: string) => ReactNode;
-  control?: Control<any, any>;
-};
+type InputFieldProps<TFieldValues extends FieldValues = FieldValues> =
+  ComponentProps<typeof Input> & {
+    label: string;
+    name: FieldPath<TFieldValues>;
+    containerClassName?: string;
+    extraContent?: (value: string) => ReactNode;
+    control?: Control<TFieldValues>;
+  };
 
-export const InputField = ({
+export const InputField = <TFieldValues extends FieldValues = FieldValues>({
   label,
   name,
   required,
@@ -19,8 +26,8 @@ export const InputField = ({
   extraContent,
   control: customControl,
   ...props
-}: InputFieldProps) => {
-  const { control } = useFormContext();
+}: InputFieldProps<TFieldValues>) => {
+  const { control } = useFormContext<TFieldValues>();
   return (
     <Controller
       control={customControl ?? control}

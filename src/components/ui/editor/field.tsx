@@ -1,26 +1,32 @@
-import { Control, Controller, useFormContext } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldPath,
+  FieldValues,
+  useFormContext,
+} from "react-hook-form";
 
-import { FieldWrapper } from "../field-wrapper";
 import { Editor } from ".";
+import { FieldWrapper } from "../field-wrapper";
 
-type EditorFieldProps = {
+type EditorFieldProps<TFieldValues extends FieldValues = FieldValues> = {
   label: string;
-  name: string;
+  name: FieldPath<TFieldValues>;
   containerClassName?: string;
   required?: boolean;
   className?: string;
-  control?: Control<any, any>;
+  control?: Control<TFieldValues>;
 };
 
-export const EditorField = ({
+export const EditorField = <TFieldValues extends FieldValues = FieldValues>({
   label,
   name,
   required,
   containerClassName,
   control: customControl,
   ...props
-}: EditorFieldProps) => {
-  const { control } = useFormContext();
+}: EditorFieldProps<TFieldValues>) => {
+  const { control } = useFormContext<TFieldValues>();
   return (
     <Controller
       control={customControl ?? control}

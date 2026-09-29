@@ -21,13 +21,13 @@ type GenerationData = {
   }[];
 };
 
-type GenearteFromJobTitleProps = {
+type GenerateFromJobTitleProps = {
   onClose: () => void;
 };
 
 export const GenerateFromJobTitle = ({
   onClose,
-}: GenearteFromJobTitleProps) => {
+}: GenerateFromJobTitleProps) => {
   const { control, formState, handleSubmit } = useForm<FormData>();
   const { setValue } = useFormContext<ResumeData>();
 
