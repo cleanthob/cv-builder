@@ -2,6 +2,7 @@ import { BaseDialogProps, Dialog } from "@/components/ui/dialog";
 import { JSX } from "react/jsx-runtime";
 import { GenerateFromJobTitle } from "./job-title";
 import { GenerateToFixContent } from "./fix-content";
+import { GenerateTranslation } from "./translate";
 
 type GenerationDialogProps = BaseDialogProps & {
   mode: AIGenerationMode;
@@ -16,7 +17,7 @@ export const GenerationDialog = ({ mode, ...props }: GenerationDialogProps) => {
   const configPerMode: Record<AIGenerationMode, JSX.Element> = {
     JOB_TITLE: <GenerateFromJobTitle onClose={onClose} />,
     FIX_CONTENT: <GenerateToFixContent onClose={onClose} />,
-    TRANSLATE_CONTENT: <div>Traduzir conteúdo existente</div>,
+    TRANSLATE_CONTENT: <GenerateTranslation onClose={onClose} />,
   };
 
   const content = configPerMode[mode];
