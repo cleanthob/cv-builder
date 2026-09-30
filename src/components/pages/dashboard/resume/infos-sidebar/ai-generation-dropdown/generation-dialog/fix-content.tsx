@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { queryKeys } from "@/constants/query-keys";
 import { ApiService } from "@/services/api";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { mergician } from "mergician";
 import { useForm, useFormContext } from "react-hook-form";
 import { toast } from "sonner";
@@ -12,25 +13,30 @@ type GenerateToFixContentProps = {
 export const GenerateToFixContent = ({
   onClose,
 }: GenerateToFixContentProps) => {
-  const { formState, handleSubmit } = useForm();
+  const { handleSubmit } = useForm();
   const { getValues, setValue } = useFormContext<ResumeData>();
 
-  const { mutateAsync: handleGenerate } = useMutation({
+  const queryClient = useQueryClient();
+
+  const { mutate: handleGenerate, isPending } = useMutation({
     mutationFn: ApiService.fixContent,
+    onSuccess: (data) => {
+      const content = getValues("content");
+      const generation = JSON.parse(data.data);
+
+      const mergedContent = mergician(content, generation) as ResumeContentData;
+      setValue("content", mergedContent);
+
+      toast.success("Conteúdo gerado com sucesso!");
+      queryClient.invalidateQueries({ queryKey: queryKeys.credits });
+
+      onClose();
+    },
   });
 
   const onSubmit = async () => {
     const content = getValues("content");
-    const data = await handleGenerate(content);
-
-    const generation = JSON.parse(data.data);
-
-    const mergedContent = mergician(content, generation) as ResumeContentData;
-    setValue("content", mergedContent);
-
-    toast.success("Conteúdo gerado com sucesso!");
-
-    onClose();
+    handleGenerate(content);
   };
 
   return (
@@ -42,11 +48,7 @@ export const GenerateToFixContent = ({
       </p>
       <p>Isso pode levar alguns segundos, aguarde o resultado.</p>
 
-      <Button
-        className="w-max ml-auto"
-        type="submit"
-        disabled={formState.isSubmitting}
-      >
+      <Button className="w-max ml-auto" type="submit" disabled={isPending}>
         Gerar conteúdo
       </Button>
     </form>
