@@ -1,5 +1,7 @@
 import { formatTailwindHTML } from "@/lib/utils";
+import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer";
+import puppeteerCore from "puppeteer-core";
 
 export const POST = async (request: Request) => {
   try {
@@ -15,7 +17,16 @@ export const POST = async (request: Request) => {
       );
     }
 
-    const browser = await puppeteer.launch();
+    let browser = null;
+
+    if (process.env.NODE_ENV === "development") {
+      browser = await puppeteer.launch();
+    } else {
+      browser = await puppeteerCore.launch({
+        args: chromium.args,
+        executablePath: await chromium.executablePath(),
+      });
+    }
 
     const page = await browser.newPage();
 
