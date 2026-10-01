@@ -20,6 +20,9 @@ const fontTitle = Nunito({
 
 export const metadata: Metadata = {
   title: "CvBuilder",
+  icons: {
+    icon: '/favicon.svg'
+  }
 };
 
 setDefaultOptions({

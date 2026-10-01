@@ -1,7 +1,13 @@
 import Logo from "@/assets/logo.svg";
 import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  description:
+    "Crie seu currículo de forma simples, rápida e gratuita com o CvBuilder. Comece agora mesmo a criar seu currículo profissional e impressione os recrutadores.",
+};
 
 export default function Home() {
   return (
