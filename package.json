@@ -11,7 +11,8 @@
     "db:push": "npx drizzle-kit push",
     "db:generate": "npx drizzle-kit generate",
     "db:migrate": "tsx ./src/db/migrate.ts",
-    "stripe:webhook": "stripe listen --all-snapshot --forward-to localhost:3000/api/webhooks/stripe"
+    "stripe:webhook": "stripe listen --all-snapshot --forward-to localhost:3000/api/webhooks/stripe",
+    "postinstall": "npm run db:migrate"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.3",
