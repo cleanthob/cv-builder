@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: ["puppeteer-core", "@sparticuz/chromium"],
+  },
   /* config options here */
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule: any) =>
